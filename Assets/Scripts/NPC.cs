@@ -4,15 +4,38 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    DialogTextbox npcTextBox;
+    [SerializeField, TextArea(3, 5)]
+    string npcDialog;
+
+    public void StartTalking()
     {
-        
+        npcTextBox.gameObject.SetActive(true);
+        npcTextBox.TextDialog = npcDialog;
+      /*  npcTextBox.Message = npcDialog;
+        npcTextBox.ShowDialong();*/
     }
 
-    // Update is called once per frame
-    void Update()
+    /*public void StopTalking()
     {
-        
+        npcTextBox.gameObject.SetActive(false);
+        npcTextBox.ClearText();
+    }*/
+
+    void OnTriggerEnter(Collider other) 
+    {
+        if(other.CompareTag("Player"))
+        {
+            StartTalking();
+        }
     }
+
+  /*  void OnTriggerExit(Collider other) 
+    {
+        if(other.CompareTag("Player"))
+        {
+            StopTalking();
+        }
+    }*/
 }
