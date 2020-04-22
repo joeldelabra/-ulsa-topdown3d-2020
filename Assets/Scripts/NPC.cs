@@ -17,11 +17,11 @@ public class NPC : MonoBehaviour
         npcTextBox.ShowDialong();*/
     }
 
-    /*public void StopTalking()
+    public void StopTalking()
     {
         npcTextBox.gameObject.SetActive(false);
-        npcTextBox.ClearText();
-    }*/
+       /* npcTextBox.ClearText();*/
+    }
 
     void OnTriggerEnter(Collider other) 
     {
@@ -31,11 +31,11 @@ public class NPC : MonoBehaviour
         }
     }
 
-  /*  void OnTriggerExit(Collider other) 
+   void OnTriggerExit(Collider other) 
     {
         if(other.CompareTag("Player"))
         {
             StopTalking();
         }
-    }*/
+    }
 }

@@ -13,5 +13,10 @@ public class DialogTextbox : MonoBehaviour
      set => dialog.text = value;
  }
 
+ public void Animate()
+ {
+     
+ }
+
 
 }
