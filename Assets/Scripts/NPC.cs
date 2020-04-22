@@ -12,15 +12,14 @@ public class NPC : MonoBehaviour
     public void StartTalking()
     {
         npcTextBox.gameObject.SetActive(true);
-        npcTextBox.TextDialog = npcDialog;
-      /*  npcTextBox.Message = npcDialog;
-        npcTextBox.ShowDialong();*/
+        npcTextBox.Message = npcDialog;
+        npcTextBox.ShowDialog();
     }
 
     public void StopTalking()
     {
         npcTextBox.gameObject.SetActive(false);
-       /* npcTextBox.ClearText();*/
+        npcTextBox.ClearText();
     }
 
     void OnTriggerEnter(Collider other) 
