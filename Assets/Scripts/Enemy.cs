@@ -6,16 +6,21 @@ public class Enemy : MonoBehaviour
 {
   [SerializeField, Range(0.1f,10f)]
   float moveSpeed;
-  [SerializeField, Range(0f,10f)]
+  [SerializeField, Range(0.1f,10f)]
   float minDistance;
 
   void Update()
   {
+    if(Attack)
+    {
+      transform.Translate(transform.forward * moveSpeed * Time.deltaTime);
+      transform.LookAt(Gamemanager.instance.Player.transform);
 
+    }
   }
 
-/*  public bool Attack
+bool Attack
   {
-      get => vecto3.Distance(this.transform.);
-  }*/ 
+      get => Vector3.Distance(this.transform.position, Gamemanager.instance.Player.transform.position) <= minDistance;
+  }
 }
