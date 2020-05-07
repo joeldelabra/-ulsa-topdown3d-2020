@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    [SerializeField] float moveSpeed;
-    
+    [SerializeField]
+    float moveSpeed;
     Animator anim;
 
-    void Awake() {
-        anim = GetComponent<Animator>();    
+    [SerializeField]
+    GameObject weapon;
+
+    void Awake() 
+    {
+        anim = GetComponent<Animator>();   
+    }
+
+    void Start() 
+    {
+        WeaponVisible(false);
     }
 
     void Update()
@@ -21,12 +29,17 @@ public class Player : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(Axis.normalized);
         }
-
         anim.SetFloat("move", Mathf.Abs(Axis.normalized.magnitude));
     }
 
     Vector3 Axis
     {
         get => new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+    }
+    public Animator Anim { get => anim; }
+
+    public void WeaponVisible(bool visible)
+    {
+        weapon.SetActive(visible);
     }
 }
