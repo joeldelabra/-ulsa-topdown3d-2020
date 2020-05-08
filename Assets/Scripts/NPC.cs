@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField]
-    DialogTextbox npcTextBox;
-    [SerializeField, TextArea(3, 5)]
-    string npcDialog;
+    [SerializeField] DialogTextBox npcTextBox;
+    [SerializeField, TextArea(3, 5)] string npcDialog;
 
     public void StartTalking()
     {
@@ -27,10 +25,11 @@ public class NPC : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             StartTalking();
+            Debug.Log("Funciona el collider");
         }
     }
 
-   void OnTriggerExit(Collider other) 
+    private void OnTriggerExit(Collider other) 
     {
         if(other.CompareTag("Player"))
         {

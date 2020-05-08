@@ -1,63 +1,58 @@
-﻿sing System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField, Range(0.1f, 10f)]
-    float moveSpeed;
-    [SerializeField, Range(0.1f, 10f)]
-    float minDistance;
-    
+    [SerializeField, Range(0.1f, 10f)] float moveSpeed;
+    [SerializeField, Range(0f, 10f)] float minDistance;
+
     NavMeshAgent navMeshAgent;
 
-    
     Animator anim;
 
-    [SerializeField]
-    GameObject weapon;
+    [SerializeField] GameObject weapon;
 
     void Awake() 
     {
         anim = GetComponent<Animator>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent = GetComponent<NavMeshAgent>();    
     }
 
-    void Start() 
-    {
-        WeaponVisible(false);
+    void Start() {
+        WeaponVisible(false);    
     }
-
 
     void Update() 
     {
         if(Attack)
         {
-            if(!Gamemanager.instance.IsInCombat)
+            if(!GameManager.instance.IsInCombat)
             {
-                 Gamemanager.instance.IsInCombat = true;
+                GameManager.instance.IsInCombat = true;
             }
-            navMeshAgent.destination = Gamemanager.instance.Player.transform.position;
-            transform.LookAt(Gamemanager.instance.Player.transform);
+            
+            //transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            navMeshAgent.destination = GameManager.instance.Player.transform.position;
+            transform.LookAt(GameManager.instance.Player.transform);
         }
-        else
+        else 
         {
             navMeshAgent.destination = transform.position;
 
-            if(StopCombat && Gamemanager.instance.IsInCombat)
+            if(StopCombat && GameManager.instance.IsInCombat)
             {
-                Gamemanager.instance.IsInCombat = false;
+                GameManager.instance.IsInCombat = false;
                 anim.SetLayerWeight(0, 1);
                 anim.SetLayerWeight(1, 0);
-                Gamemanager.instance.StopCombat();
+                GameManager.instance.StopCombat();
                 WeaponVisible(false);
             }
 
-            if(Gamemanager.instance.IsInCombat)
+            if(GameManager.instance.IsInCombat)
             {
-                Gamemanager.instance.StartCombat();
+                GameManager.instance.StartCombat();
                 anim.SetLayerWeight(1, 1);
                 WeaponVisible(true);
             }
@@ -66,7 +61,7 @@ public class Enemy : MonoBehaviour
 
     void LateUpdate() 
     {
-         anim.SetBool("run", Attack); 
+        anim.SetBool("run", Attack);
     }
 
     bool StopCombat
@@ -74,19 +69,18 @@ public class Enemy : MonoBehaviour
         get => !(distanceBtwPlayer <= minDistance);
     }
 
-    bool Attack
+    public bool Attack
     {
-        get => !StopCombat && distanceBtwPlayer> navMeshAgent.stoppingDistance;
+        get => !StopCombat && distanceBtwPlayer > navMeshAgent.stoppingDistance;
     }
 
     float distanceBtwPlayer
     {
-        get => Vector3.Distance(this.transform.position, Gamemanager.instance.Player.transform.position);
+        get => Vector3.Distance(this.transform.position, GameManager.instance.Player.transform.position);
     }
 
-    void WeaponVisible(bool visible)
+    public void WeaponVisible(bool visible)
     {
         weapon.SetActive(visible);
     }
-
 }

@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gamemanager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static Gamemanager instance;
+    public static GameManager instance;
 
-     [SerializeField]
-     Player player;
+    [SerializeField] Player player;
 
-     bool isInCombat;
+    bool isInCombat;
 
-    [SerializeField]
-     GameAudio gameAudio;
+    [SerializeField] GameAudio gameAudio;
 
     public Player Player { get => player; }
     public bool IsInCombat { get => isInCombat; set => isInCombat = value; }
@@ -27,28 +25,29 @@ public class Gamemanager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }    
-        DontDestroyOnLoad(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);    
     }
 
     void Start() 
     {
         gameAudio.Aud = GetComponent<AudioSource>();
-        gameAudio.PlayBGMusic();
+        gameAudio.PlayBackgroundMusic();
     }
 
     public void StartCombat()
     {
         player.Anim.SetLayerWeight(1, 1);
         player.WeaponVisible(true);
-        gameAudio.PlaBattleMusic();
+        gameAudio.PlayBattleMusic();
     }
 
-     public void StopCombat()
+    public void StopCombat()
     {
         player.Anim.SetLayerWeight(0, 1);
         player.Anim.SetLayerWeight(1, 0);
         player.WeaponVisible(false);
-        gameAudio.PlayBGMusic();
+        gameAudio.PlayBackgroundMusic();
     }
 }
